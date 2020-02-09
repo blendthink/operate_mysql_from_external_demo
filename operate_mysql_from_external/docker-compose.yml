@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  mysqldump:
+    build: mysqldump
+    container_name: "demo-mysqldump"
+    volumes:
+      - './mysqldump/mysqldump.sh:/mysqldump.sh'
+      - './mysqldump/dumpfiles:/dumpfiles'
+    environment:
+      MYSQL_HOST: "${MYSQL_HOST}"
+      MYSQL_PORT: "${MYSQL_PORT}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQLDUMP_OPTIONS: "${MYSQLDUMP_OPTIONS}"
+      MYSQLDUMP_DATABASE_OPTION: "${MYSQLDUMP_DATABASE_OPTION}"
+    command: sh mysqldump.sh
+
+networks:
+  default:
+    external:
+      name: "${MYSQL_NETWORK}"
