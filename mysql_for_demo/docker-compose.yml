@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+  mysql:
+    build: mysql
+    container_name: "demo-mysql"
+    tty: true
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "demo"
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - "./mysql/data:/var/lib/mysql"
+      - "./mysql/conf_d:/etc/mysql/conf.d"
+      - "./mysql/mysql_init:/docker-entrypoint-initdb.d"
+    ports:
+      - "3306:3306"
+    networks:
+      - mysql
+
+networks:
+  mysql:
